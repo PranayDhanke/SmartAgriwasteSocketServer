@@ -11,9 +11,11 @@ const server = http.createServer(app);
 
 const io = new IoServer(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://smart-agriwaste.vercel.app"],
+    origin: ["https://smart-agriwaste.vercel.app", "https://localhost:3000"],
   },
 });
+
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
