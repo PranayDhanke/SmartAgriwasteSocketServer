@@ -1,4 +1,3 @@
-
 import express from "express";
 import { Server as IoServer } from "socket.io";
 import http from "node:http";
@@ -11,11 +10,9 @@ const server = http.createServer(app);
 
 const io = new IoServer(server, {
   cors: {
-    origin: ["https://smart-agriwaste.vercel.app", "https://localhost:3000"],
+    origin: ["http://localhost:3000/", "https://smart-agriwaste.vercel.app/"],
   },
 });
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -59,7 +56,9 @@ async function start() {
           if (!payload || !payload.message) return;
 
           const text = String(payload.message).slice(0, 2000);
-          const username = payload.username ? String(payload.username).slice(0, 100) : "anonymous";
+          const username = payload.username
+            ? String(payload.username).slice(0, 100)
+            : "anonymous";
           const userid = payload.userid ? String(payload.userid) : null;
 
           const messageData = { message: text, username, userid };
@@ -89,7 +88,9 @@ async function start() {
       });
     });
 
-    server.listen(PORT, () => console.log(`Socket server listening on ${PORT}`));
+    server.listen(PORT, () =>
+      console.log(`Socket server listening on ${PORT}`)
+    );
   } catch (err) {
     console.error("Failed to start server:", err);
     process.exit(1);
